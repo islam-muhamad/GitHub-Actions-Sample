@@ -75,7 +75,7 @@ jobs:
           username: "Pull Request Build Status"
           text: |
             ${{ env.WORKFLOW_CONCLUSION }}:
-            https://github.com/islam-muhamad/GitHub-Actions-Sample/action/runs/${{ github.run_id }}
+            https://github.com/${{github.repository_owner}/GitHub-Actions-Sample/actions/runs/${{ github.run_id }}
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
