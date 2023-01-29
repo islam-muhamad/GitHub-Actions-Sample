@@ -46,6 +46,8 @@ jobs:
         uses: Skitionek/notify-microsoft-teams@v1.0.4
         if: always()
         with:
+          job: ${{ toJson(job) }}
+          steps: ${{ toJson(steps) }}
           webhook_url: ${{ secrets.TEAMS_WEBHOOK }}
 
       - name: Restore Cache
