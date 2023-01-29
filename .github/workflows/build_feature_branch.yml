@@ -66,7 +66,9 @@ jobs:
           groups: e-Commerce
           file: app/build/outputs/apk/debug/app-debug.apk
 
-      - uses: toko-bifrost/ms-teams-deploy-card@master
+      - name: Send Notification
+        uses: toko-bifrost/ms-teams-deploy-card@master
+          if: always()
           with:
             github-token: ${{ github.token }}
             webhook-uri: ${{ secrets.TEAMS_WEBHOOK }}
