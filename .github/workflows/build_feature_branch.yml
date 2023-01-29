@@ -70,10 +70,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: toko-bifrost/ms-teams-deploy-card@3.1.2
-          with:
-            github-token: ${{ secrets.TOKEN }}
-            webhook-uri: ${{ secrets.TEAMS_WEBHOOK }}
-            show-on-failure: true
-            card-layout-exit: complete
-            enable-view-status: true
-            timezone: Africa/Cairo
+        with:
+          github-token: ${{ secrets.TOKEN }}
+          webhook-uri: ${{ secrets.TEAMS_WEBHOOK }}
+          show-on-failure: true
+          card-layout-exit: complete
+          enable-view-status: true
+          timezone: Africa/Cairo
