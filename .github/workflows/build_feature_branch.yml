@@ -82,8 +82,5 @@ jobs:
             ${{ env.WORKFLOW_CONCLUSION }}:
               https://github.com/${{github.repository_owner}}/GitHub-Actions-Sample/actions/runs/${{ github.run_id }}
         env:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.TOKEN }}
           webhook-uri: ${{ secrets.TEAMS_WEBHOOK }}
-
-      - name: Microsoft Teams Deploy Card
-        uses: toko-bifrost/ms-teams-deploy-card@3.1.2
