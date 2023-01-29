@@ -66,7 +66,7 @@ jobs:
           file: app/build/outputs/apk/debug/app-debug.apk
 
   notification_job:
-    needs: [ test_job, assemble_job ]
+    needs: [ test_job, assemble_distribute_job ]
     name: Microsoft Teams Deploy Card
     runs-on: ubuntu-latest
     steps:
