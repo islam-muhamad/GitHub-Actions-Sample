@@ -66,8 +66,8 @@ jobs:
           groups: e-Commerce
           file: app/build/outputs/apk/debug/app-debug.apk
 
-      - name: Send Notification
-        uses: toko-bifrost/ms-teams-deploy-card@master
+      - name: Microsoft Teams Deploy Card
+        uses: toko-bifrost/ms-teams-deploy-card@3.1.2
           if: always()
           with:
             github-token: ${{ github.token }}
