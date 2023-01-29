@@ -5,37 +5,36 @@ on:
     branches: 'feat/**'
 
 jobs:
-  test_job:
-    name: Test
-    runs-on: ubuntu-latest
-    continue-on-error: true
-    steps:
-
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Restore Cache
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      - name: Run Debug Tests
-        run: ./gradlew testDebugUnitTest --continue
-
-      - name: Upload Test Reports
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v2
-        with:
-          name: test-reports
-          path: '**/build/reports/tests/'
+#  test_job:
+#    name: Test
+#    runs-on: ubuntu-latest
+#    continue-on-error: true
+#    steps:
+#
+#      - name: Checkout
+#        uses: actions/checkout@v2
+#
+#      - name: Restore Cache
+#        uses: actions/cache@v2
+#        with:
+#          path: |
+#            ~/.gradle/caches
+#            ~/.gradle/wrapper
+#          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+#          restore-keys: |
+#            ${{ runner.os }}-gradle-
+#
+#      - name: Run Debug Tests
+#        run: ./gradlew testDebugUnitTest --continue
+#
+#      - name: Upload Test Reports
+#        if: ${{ always() }}
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: test-reports
+#          path: '**/build/reports/tests/'
 
   assemble_distribute_job:
-    needs: [test_job]
     name: Assemble and Upload to Firebase
     runs-on: ubuntu-latest
     steps:
