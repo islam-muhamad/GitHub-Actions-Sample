@@ -42,6 +42,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Notify Microsoft Teams
+        uses: toko-bifrost/ms-teams-deploy-card@3.1.2
+        with:
+          github-token: ${{ secrets.TOKEN }}
+          webhook-uri: ${{ secrets.TEAMS_WEBHOOK }}
+          show-on-failure: true
+          card-layout-exit: complete
+          enable-view-status: true
+          timezone: Africa/Cairo
+
       - name: Restore Cache
         uses: actions/cache@v2
         with:
@@ -63,17 +73,3 @@ jobs:
           token: ${{ secrets.FIREBASE_TOKEN }}
           groups: e-Commerce
           file: app/build/outputs/apk/debug/app-debug.apk
-
-  notification_job:
-    needs: [assemble_distribute_job ]
-    name: Notify Build Status
-    runs-on: ubuntu-latest
-    steps:
-      - uses: toko-bifrost/ms-teams-deploy-card@3.1.2
-        with:
-          github-token: ${{ secrets.TOKEN }}
-          webhook-uri: ${{ secrets.TEAMS_WEBHOOK }}
-          show-on-failure: true
-          card-layout-exit: complete
-          enable-view-status: true
-          timezone: Africa/Cairo
