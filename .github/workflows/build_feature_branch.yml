@@ -70,7 +70,7 @@ jobs:
         uses: toko-bifrost/ms-teams-deploy-card@3.1.2
           if: always()
           with:
-            github-token: ${{ github.token }}
+            github-token: ${{ secrets.TOKEN }}
             webhook-uri: ${{ secrets.TEAMS_WEBHOOK }}
             show-on-failure: true
             card-layout-exit: complete
