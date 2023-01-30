@@ -32,8 +32,8 @@ jobs:
           name: test-reports
           path: '**/build/reports/tests/'
 
-  assemble_job:
-    name: Assemble
+  assemble_distribute_job:
+    name: Assemble and Upload to App Center
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
@@ -52,6 +52,8 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Assemble Debug
+        env:
+          VERSION_CODE: ${{ github.run_id }}
         run: ./gradlew assembleDebug
 
       - name: Upload APK
@@ -60,8 +62,18 @@ jobs:
           name: apk
           path: app/build/outputs/apk/debug/**.apk
 
+      - name: upload artefact to App Center
+        uses: wzieba/AppCenter-Github-Action@v1.3.3
+        with:
+          appName: islam-mohamed/GitHub-Actions-Sample
+          token: ${{secrets.APP_CENTER_TOKEN}}
+          group: e-commerce
+          file: app/build/outputs/apk/debug/app-debug.apk
+          notifyTesters: true
+          debug: true
+
   notification_job:
-    needs: [test_job, assemble_job]
+    needs: [test_job, assemble_distribute_job]
     name: Notify Build Status
     runs-on: ubuntu-latest
     steps:
