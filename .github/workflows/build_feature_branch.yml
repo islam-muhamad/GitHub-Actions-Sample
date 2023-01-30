@@ -72,6 +72,6 @@ jobs:
           appName: islam-mohamed/GitHub-Actions-Sample
           token: ${{secrets.APP_CENTER_TOKEN}}
           group: e-commerce
-          file: app/build/outputs/apk/debug/**.apk
+          file: app/build/outputs/apk/debug/app-debug.apk
           notifyTesters: true
           debug: true
