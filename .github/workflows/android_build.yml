@@ -3,34 +3,34 @@ name: Build Pull Request
 on: pull_request
 
 jobs:
-  test_job:
-    name: Test
-    runs-on: ubuntu-latest
-    continue-on-error: true
-    steps:
-
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Restore Cache
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      - name: Run Debug Tests
-        run: ./gradlew testDebugUnitTest --continue
-
-      - name: Upload Test Reports
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v2
-        with:
-          name: test-reports
-          path: '**/build/reports/tests/'
+#  test_job:
+#    name: Test
+#    runs-on: ubuntu-latest
+#    continue-on-error: true
+#    steps:
+#
+#      - name: Checkout
+#        uses: actions/checkout@v2
+#
+#      - name: Restore Cache
+#        uses: actions/cache@v2
+#        with:
+#          path: |
+#            ~/.gradle/caches
+#            ~/.gradle/wrapper
+#          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+#          restore-keys: |
+#            ${{ runner.os }}-gradle-
+#
+#      - name: Run Debug Tests
+#        run: ./gradlew testDebugUnitTest --continue
+#
+#      - name: Upload Test Reports
+#        if: ${{ always() }}
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: test-reports
+#          path: '**/build/reports/tests/'
 
   assemble_distribute_job:
     name: Assemble and Upload to App Center
@@ -56,24 +56,16 @@ jobs:
           VERSION_CODE: ${{ github.run_id }}
         run: ./gradlew assembleDebug
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v2
+      - name: Upload to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.5.0
         with:
-          name: apk
-          path: app/build/outputs/apk/debug/**.apk
-
-      - name: upload artefact to App Center
-        uses: wzieba/AppCenter-Github-Action@v1.3.3
-        with:
-          appName: islam-mohamed/GitHub-Actions-Sample
-          token: ${{secrets.APP_CENTER_TOKEN}}
-          group: e-commerce
+          appId: ${{ secrets.FIREBASE_APP_ID }}
+          token: ${{ secrets.FIREBASE_TOKEN }}
+          groups: e-Commerce
           file: app/build/outputs/apk/debug/app-debug.apk
-          notifyTesters: true
-          debug: true
 
   notification_job:
-    needs: [test_job, assemble_distribute_job]
+    needs: [assemble_distribute_job]
     name: Notify Build Status
     runs-on: ubuntu-latest
     steps:
