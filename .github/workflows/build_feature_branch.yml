@@ -34,7 +34,7 @@ jobs:
           name: apk
           path: app/build/outputs/apk/debug/**.apk
 
-      notification_job:
+  notification_job:
         needs: [ assemble_upload_apk ]
         name: Notify Build Status
         runs-on: ubuntu-latest
