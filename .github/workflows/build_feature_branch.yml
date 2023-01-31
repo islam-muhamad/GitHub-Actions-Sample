@@ -6,7 +6,7 @@ on:
 
 jobs:
   assemble_upload_apk:
-    name: Assemble and Upload to Firebase
+    name: Assemble and Upload APK
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
