@@ -8,6 +8,7 @@ jobs:
   assemble_upload_apk:
     name: Assemble and Upload to Firebase
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
 
       - name: Checkout
